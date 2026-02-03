@@ -10,7 +10,7 @@ use generic::*;
 #[doc = r"Common register and bit access and modify traits"]
 pub mod generic;
 #[cfg(feature = "rt")]
-extern "C" {
+unsafe extern "C" {
     fn WWDG();
     fn PVD();
     fn RTC();
@@ -43,8 +43,8 @@ pub union Vector {
 }
 #[cfg(feature = "rt")]
 #[doc(hidden)]
-#[link_section = ".vector_table.interrupts"]
-#[no_mangle]
+#[unsafe(link_section = ".vector_table.interrupts")]
+#[unsafe(no_mangle)]
 pub static __INTERRUPTS: [Vector; 31] = [
     Vector { _handler: WWDG },
     Vector { _handler: PVD },
@@ -485,37 +485,37 @@ impl Peripherals {
     #[doc = r" Each of the returned peripherals must be used at most once."]
     #[inline]
     pub unsafe fn steal() -> Self {
-        DEVICE_PERIPHERALS = true;
+        unsafe { DEVICE_PERIPHERALS = true }
         Peripherals {
-            adc: Adc::steal(),
-            comp1: Comp1::steal(),
-            comp2: Comp2::steal(),
-            rcc: Rcc::steal(),
-            pwr: Pwr::steal(),
-            gpioa: Gpioa::steal(),
-            gpiob: Gpiob::steal(),
-            gpiof: Gpiof::steal(),
-            exti: Exti::steal(),
-            lptim: Lptim::steal(),
-            usart1: Usart1::steal(),
-            usart2: Usart2::steal(),
-            rtc: Rtc::steal(),
-            iwdg: Iwdg::steal(),
-            wwdg: Wwdg::steal(),
-            tim1: Tim1::steal(),
-            tim3: Tim3::steal(),
-            tim14: Tim14::steal(),
-            tim16: Tim16::steal(),
-            tim17: Tim17::steal(),
-            syscfg: Syscfg::steal(),
-            dma: Dma::steal(),
-            flash: Flash::steal(),
-            crc: Crc::steal(),
-            spi1: Spi1::steal(),
-            spi2: Spi2::steal(),
-            i2c: I2c::steal(),
-            led: Led::steal(),
-            dbgmcu: Dbgmcu::steal(),
+            adc: unsafe { Adc::steal() },
+            comp1: unsafe { Comp1::steal() },
+            comp2: unsafe { Comp2::steal() },
+            rcc: unsafe { Rcc::steal() },
+            pwr: unsafe { Pwr::steal() },
+            gpioa: unsafe { Gpioa::steal() },
+            gpiob: unsafe { Gpiob::steal() },
+            gpiof: unsafe { Gpiof::steal() },
+            exti: unsafe { Exti::steal() },
+            lptim: unsafe { Lptim::steal() },
+            usart1: unsafe { Usart1::steal() },
+            usart2: unsafe { Usart2::steal() },
+            rtc: unsafe { Rtc::steal() },
+            iwdg: unsafe { Iwdg::steal() },
+            wwdg: unsafe { Wwdg::steal() },
+            tim1: unsafe { Tim1::steal() },
+            tim3: unsafe { Tim3::steal() },
+            tim14: unsafe { Tim14::steal() },
+            tim16: unsafe { Tim16::steal() },
+            tim17: unsafe { Tim17::steal() },
+            syscfg: unsafe { Syscfg::steal() },
+            dma: unsafe { Dma::steal() },
+            flash: unsafe { Flash::steal() },
+            crc: unsafe { Crc::steal() },
+            spi1: unsafe { Spi1::steal() },
+            spi2: unsafe { Spi2::steal() },
+            i2c: unsafe { I2c::steal() },
+            led: unsafe { Led::steal() },
+            dbgmcu: unsafe { Dbgmcu::steal() },
         }
     }
 }
